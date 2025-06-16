@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>Soil Fertility Prediction</title>
+<style>
+
+body { 
+  box-sizing: border-box;
+  background: #732025;
+  color: #fff;
+  font-size: 18px;
+  margin-left: 30px;
+}
+button{
+  width: 300px;
+  height: 50px;
+  margin-left: 500px;
+  margin-top: 50px;
+}
+label{
+  display: block;
+  font-size: 20px;
+  color: white;
+  margin-bottom: 5px;
+  font-weight: bold;
+  width: 150px;
+}
+input { 
+  margin-bottom: 10px; 
+  background: rgba(0,0,0,0.3);
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  color: white;
+  width:400px;
+}
+.to{
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+
+.class1{
+  column-count: 2;
+  align-items: center;
+}
+
+
+
+.header {
+          display :flex;
+          gap:30px;
+          text-align: center;
+          width: 100%;
+          height:120px;
+          /* justify-content: space-evenly; */
+        }
+
+.logo {
+  width: 320px;
+  height: 120px;
+  display: block;
+}
+.new{
+  display: flex ;
+  flex-direction: column;
+  gap:5px;
+}
+
+.company-name {
+            font-size: 44px;
+            font-weight: bold;
+            text-align: start;
+            word-spacing: 6px;
+        }
+
+#desc{
+  font-size: 16px;
+  font-weight:500;
+  text-align:start;
+
+}
+
+.t{
+  margin-top: 20px;
+  column-count: 1;
+  margin-bottom: 50px;
+  margin-left: 130px;
+}
+.t input:hover {
+    background-color: rgba(11, 11, 11, 0.3);
+    color:aliceblue;
+}
+ 
+.t input{
+  margin-bottom: 10px; 
+  background:rgba(0,0,0,0.3);
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  color: white;
+  width:600px;
+}
+.t label{
+  display: block;
+  font-size: 21px;
+  color: white;
+  margin-bottom: 5px;
+  width: 300px;
+
+}
+.tu{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.print-btn {
+    display: block;
+    width: 250px;
+    margin: 30px auto; /* Adjusted spacing */
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #28a745, #218838);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    position: relative; /* No more fixed position */
+}
+
+.print-btn:hover {
+    background: linear-gradient(45deg, #218838, #1e7e34);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+</style>
+</head>
+<body>
+  <div class="header">
+    <img src="/static/logo.png" alt="Company Logo" class="logo">
+    <div class="new">
+      <div class="company-name">EHS MATRIX PRIVATE LTD. PUNE</div>
+      <div id="desc">Gmail - info@ehsmatrix.co.in&nbsp;&nbsp;&nbsp;&nbsp;Phone no. - +91 9850116976/9579684751&nbsp;&nbsp;&nbsp;&nbsp;LinkedIn- www.linkedin.com/company/ehs-matrixpvt-ltd/</div>
+      <div id="desc">Registered Address - C-7, Onkar Kudale Patil Estate, Manikbagh Sinhgad Road, Pune 411051</div>
+      <div id="desc">Laboratory Address - Sr. No 30/7, Office No. 202 & 203, Chintamani Industrial Estate, Near Dran Company, Dhayari Pune-411041</div>
+    </div>
+  </div>
+	
+      <h1 id="abc"><center>Enter Customer Details </center></h1>
+      <form>
+        <div class="t">
+
+          <div class="tu">
+            <label for="companyCustomerName">Enter Company or Customer Name</label>
+            <input type="text" id="companyCustomerName" name="companyCustomerName" placeholder="Company/Customer Name" required oninput="saveData()"><br>  
+          </div>
+         
+          <div class="tu">
+            <label for="email">Enter Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Email Address" required oninput="saveData()"><br>  
+          </div>
+
+          <div class="tu">
+            <label for="location">Enter Location Name</label>
+            <input type="text" id="location" name="location" placeholder="Location" required oninput="saveData()"><br>
+          </div>
+
+          <div class="tu">
+            <label for="sampleDate">Enter sample collection date </label>
+            <input type="date" id="sampleDate" name="sampleDate" placeholder="Sample Collection Date" required oninput="saveData()"><br>
+          </div>
+          
+          <div class=" tu">
+            <label for="sampleNo">Enter sampleNo</label>
+            <input type="text" id="sampleNo" name="sampleNo" placeholder="Sample No (6 Alphanumeric)" required pattern="[A-Za-z0-9]{6}" title="Enter exactly 6 alphanumeric characters" oninput="saveData()">
+          </div>
+        </div>
+      </form>
+
+    <h1 id="abc"><center>Predict Soil Fertility</center></h1>
+    <form action="{{ url_for('soilfertility')}}"method="post">
+      <div class="class2 ">
+        <div class = "class1" >
+
+          <diV class="to">
+            <label for="NO3">Nitrate - </label>
+            <input id="NO3" type="text" name="0" placeholder="NO3(ppm)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </diV>
+
+          <div class="to">
+            <label for="NH4">Ammonium - </label>
+            <input id="NH4" type="text" name="1" placeholder="NH4(ppm)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="P">Phosphorus - </label>
+            <input id="P" type="text" name="2" placeholder="P(ppm)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="SO4">Sulfate - </label>
+            <input id="SO4" type="text" name="3" placeholder="SO4(ppm)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="K">Potassium - </label>
+            <input id="K" type="text" name="4" placeholder="K(ppm)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="B">Boron - </label>
+            <input id="B" type="text" name="5" placeholder="B(ppm)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="Organic Matter">Organic Matter - </label>
+            <input id="Organic Matter" type="text" name="6" placeholder="Organic Matter(%age)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="pH">PH Level - </label>
+            <input id="pH" type="text" name="7" placeholder="pH(pH)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="Zn">Zinc - </label>
+            <input id="Zn" type="text" name="8" placeholder="Zn(ppm)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="Cu">Copper - </label>
+            <input id="Cu" type="text" name="9" placeholder="Cu(ppm)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="Fe">Iron - </label>
+            <input id="Fe" type="text" name="10" placeholder="Fe(ppm)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="Ca">Calcium - </label>
+            <input id="Ca" type="text" name="11" placeholder="Ca(meq/100g)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="Mg">Magnesium - </label>
+            <input id="Mg" type="text" name="12" placeholder="Mg(meq/100g)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+          <div class="to">
+            <label for="Na">Sodium - </label>
+            <input id="Na" type="text" name="13" placeholder="Na(meq/100g)" required="required" size="50" pattern="^\d*(\.\d{0,2})?$" title="please enter numbers only" oninput="saveData()"/><br>
+          </div>
+
+        </div>
+      </div>
+      <button class="print-btn" type="submit">Predict Fertility</button>
+    </form>
+</div>
+</body>
+<script>
+ function saveData() {
+            let companyName = document.getElementById("companyCustomerName").value;
+            let email = document.getElementById("email").value;
+            let location = document.getElementById("location").value;
+            let sampleDate = document.getElementById("sampleDate").value;
+            let sampleNo = document.getElementById("sampleNo").value;
+
+            let nitrate = document.getElementById("NO3").value;
+            let ammonium = document.getElementById("NH4").value;
+            let phosphorus = document.getElementById("P").value;
+            let sulfate = document.getElementById("SO4").value;
+            let potassium = document.getElementById("K").value;
+            let boron = document.getElementById("B").value;
+            let organicMatter = document.getElementById("Organic Matter").value;
+            let pH = document.getElementById("pH").value;
+            let zinc = document.getElementById("Zn").value;
+            let copper = document.getElementById("Cu").value;
+            let iron = document.getElementById("Fe").value;
+            let calcium = document.getElementById("Ca").value;
+            let magnesium = document.getElementById("Mg").value;
+            let sodium = document.getElementById("Na").value;
+
+
+            // Save data in sessionStorage (Auto Clear on Tab Close)
+            sessionStorage.setItem("companyName", companyName);
+            sessionStorage.setItem("email", email);
+            sessionStorage.setItem("location", location);
+            sessionStorage.setItem("sampleDate", sampleDate);
+            sessionStorage.setItem("sampleNo", sampleNo);
+
+            sessionStorage.setItem("nitrate", nitrate);
+            sessionStorage.setItem("ammonium", ammonium);
+            sessionStorage.setItem("phosphorus", phosphorus);
+            sessionStorage.setItem("sulfate", sulfate);
+            sessionStorage.setItem("potassium", potassium);
+            sessionStorage.setItem("boron", boron);
+            sessionStorage.setItem("organicMatter", organicMatter);
+            sessionStorage.setItem("pH", pH);
+            sessionStorage.setItem("zinc", zinc);
+            sessionStorage.setItem("copper", copper);
+            sessionStorage.setItem("iron", iron);
+            sessionStorage.setItem("calcium", calcium);
+            sessionStorage.setItem("magnesium", magnesium);
+            sessionStorage.setItem("sodium", sodium);
+        }
+
+</script>
+</html>

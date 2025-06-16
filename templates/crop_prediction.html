@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>Soil Fertility Prediction</title>
+<style>
+body { 
+  box-sizing: border-box;
+  background: #732025;
+  color: #fff;
+  font-size: 18px;
+  margin-left: 30px;
+}
+button{
+  width: 300px;
+  height: 50px;
+  margin-left: 500px;
+  margin-top: 50px;
+}
+label{
+  display: block;
+  font-size: 20px;
+  color: white;
+  margin-bottom: 5px;
+  font-weight: bold;
+  width: 150px;
+}
+input { 
+  margin-bottom: 10px; 
+  background: rgba(0,0,0,0.3);
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  color: white;
+  width:400px;
+}
+.to{
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+
+.class1{
+  column-count: 2;
+  align-items: center;
+}
+
+
+
+.header {
+          display :flex;
+          gap:30px;
+          text-align: center;
+          width: 100%;
+          height:120px;
+          /* justify-content: space-evenly; */
+        }
+
+.logo {
+  width: 320px;
+  height: 120px;
+  display: block;
+}
+.new{
+  display: flex ;
+  flex-direction: column;
+  gap:5px;
+}
+
+.company-name {
+            font-size: 44px;
+            font-weight: bold;
+            text-align: start;
+            word-spacing: 6px;
+        }
+
+#desc{
+  font-size: 16px;
+  font-weight:500;
+  text-align:start;
+
+}
+
+.t{
+  margin-top: 20px;
+  column-count: 1;
+  margin-bottom: 50px;
+  margin-left: 130px;
+}
+.t input:hover {
+    background-color: rgba(11, 11, 11, 0.3);
+    color:aliceblue;
+}
+ 
+.t input{
+  margin-bottom: 10px; 
+  background:rgba(0,0,0,0.3);
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  color: white;
+  width:600px;
+}
+.t label{
+  display: block;
+  font-size: 21px;
+  color: white;
+  margin-bottom: 5px;
+  width: 300px;
+
+}
+.tu{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.print-btn {
+    display: block;
+    width: 250px;
+    margin: 30px auto; /* Adjusted spacing */
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #28a745, #218838);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    position: relative; /* No more fixed position */
+}
+
+.print-btn:hover {
+    background: linear-gradient(45deg, #218838, #1e7e34);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn{
+    all: unset;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    background-color:  #9b5a5e;
+    cursor: pointer;
+    padding: 5px 5px;
+    border-radius: 100%;
+}
+
+</style>
+</head>
+<body>
+    <div class="header">
+      <img src="/static/logo.png" alt="Company Logo" class="logo">
+      <div class="new">
+        <div class="company-name">EHS MATRIX PRIVATE LTD. PUNE</div>
+        <div id="desc">Gmail - info@ehsmatrix.co.in&nbsp;&nbsp;&nbsp;&nbsp;Phone no. - +91 9850116976/9579684751&nbsp;&nbsp;&nbsp;&nbsp;LinkedIn- www.linkedin.com/company/ehs-matrixpvt-ltd/</div>
+        <div id="desc">Registered Address - C-7, Onkar Kudale Patil Estate, Manikbagh Sinhgad Road, Pune 411051</div>
+        <div id="desc">Laboratory Address - Sr. No 30/7, Office No. 202 & 203, Chintamani Industrial Estate, Near Dran Company, Dhayari Pune-411041</div>
+      </div>
+    </div>
+
+    <h1 id="abc"><center>Enter Customer Details </center></h1>
+      <form>
+        <div class="t">
+
+          <div class="tu">
+            <label for="companyCustomerName">Enter Company or Customer Name</label>
+            <input type="text" id="displayCompanyName" name="companyCustomerName" placeholder="Company/Customer Name" required oninput="saveData()"><br>  
+          </div>
+         
+          <div class="tu">
+            <label for="email">Enter Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Email Address" required oninput="saveData()"><br>  
+          </div>
+
+          <div class="tu">
+            <label for="location">Enter Location Name</label>
+            <input type="text" id="location" name="location" placeholder="Location" required oninput="saveData()"><br>
+          </div>
+
+          <div class="tu">
+            <label for="sampleDate">Enter sample collection date </label>
+            <input type="date" id="sampleDate" name="sampleDate" placeholder="Sample Collection Date" required oninput="saveData()"><br>
+          </div>
+          
+          <div class=" tu">
+            <label for="sampleNo">Enter sampleNo</label>
+            <input type="text" id="sampleNo" name="sampleNo" placeholder="Sample No (6 Alphanumeric)" required pattern="[A-Za-z0-9]{6}" title="Enter exactly 6 alphanumeric characters" oninput="saveData()">
+          </div>
+        </div>
+      </form>
+
+
+
+      <h1 id="abc"><center>Enter Nearest Disrict/city/Taluka Name  </center></h1>
+
+      <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+          <form class="form-container" data-searchForm>
+            <input placeholder="Search for location..." data-searchInput>
+                <button class="btn" type="submit">
+                    <img src="/static/search.png"  width="20" height="20" loading="lazy">
+                </button>
+          </form>
+      </div>
+
+
+
+
+      <h1 id="abc" style="margin-top: 40px;"><center>Crop Prediction</center></h1>
+    <form action="/predict" method="post" abcd>
+      <div class="class2 ">
+        <div class = "class1" >
+
+            <diV class="to">
+              <label for="N">Nitrogen - </label>
+              <input id="N" type="text" name="N" placeholder="N(ppm)" required="required" size="50"  title="please enter numbers only" oninput="saveData()"/><br>
+            </diV>
+
+            <div class="to">
+                <label for="P">Phosphorus - </label>
+                <input id="P" type="text" name="P" placeholder="P(ppm)" required="required" size="50"  title="please enter numbers only" oninput="saveData()"/><br>
+            </div>
+
+            <div class="to">
+              <label for="K">Potassium - </label>
+              <input id="K" type="text" name="K" placeholder="K(ppm)" required="required" size="50"  title="please enter numbers only" oninput="saveData()"/><br>
+            </div>
+
+            <div class="to">
+              <label for="pH">PH Level - </label>
+              <input id="pH" type="text" name="ph" placeholder="pH(pH)" required="required" size="50"  title="please enter numbers only" oninput="saveData()"/><br>
+            </div>
+
+            <div class="to">
+              <label for="temp">Temperature - </label>
+              <input id="temp" type="text" name="temperature" placeholder="°C(degrees Celsius)" required="required" size="50" title="please enter numbers only" oninput="saveData()"/><br>
+            </div>
+            
+            <div class="to">
+              <label for="humidity">Humidity - </label>
+              <input id="humidity" type="text" name="humidity" placeholder="%(percentage)" required="required" size="50"  title="please enter numbers only" oninput="saveData()"/><br>
+            </div>
+        
+            <div class="to">
+              <label for="rainfall">Rainfall- </label>
+              <input id="rainfall" type="text" name="rainfall" placeholder="Average last four months - mm(millimeters)" required="required" size="50" title="please enter numbers only" oninput="saveData()"/><br>
+            </div>
+        </div>
+      </div>
+      <button class="print-btn" type="submit">Predict Crop</button>
+    </form>
+  
+  
+
+  <script>
+
+        const API_KEY = "put your key there";
+        const searchForm = document.querySelector("[data-searchForm]");
+        const searchInput = document.querySelector("[data-searchInput]");
+        searchForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            let cityName = searchInput.value;
+            if(cityName === "")
+              return;
+            else 
+               await fetchSearchWeatherInfo(cityName);
+               await getAverageRainfall(cityName);
+        })
+
+      async function fetchSearchWeatherInfo(city) {
+          try {
+              const response = await fetch(
+                  `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+                );
+              const data = await response.json();
+              console.log(data);
+              document.getElementById("temp").value = data?.main?.temp;
+              document.getElementById("humidity").value = data?.main?.humidity;
+            }
+          catch(err) {
+              console.log(err);
+            }
+        }
+
+      async function getAverageRainfall(cityName) {
+          try {
+            // 1. Get coordinates using Open-Meteo Geocoding API
+            const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=1`);
+            const geoData = await geoRes.json();
+
+            if (!geoData.results || geoData.results.length === 0) {
+              console.log("City not found.");
+              return;
+            }
+
+            const { latitude, longitude } = geoData.results[0];
+            console.log(`Coordinates of ${cityName}:`, latitude, longitude);
+
+            // 2. Fetch rainfall data from Open-Meteo API (last 7 days)
+            const today = new Date();
+            const pastDate = new Date();
+            pastDate.setDate(today.getDate() - 120); 
+            console.log(pastDate);
+            console.log(today);
+
+            const start_date = pastDate.toISOString().split("T")[0];
+            const end_date = today.toISOString().split("T")[0];
+
+            console.log(start_date);
+            console.log(end_date);
+
+            const weatherUrl = `https://archive-api.open-meteo.com/v1/archive?latitude=${latitude}&longitude=${longitude}&daily=precipitation_sum&start_date=${start_date}&end_date=${end_date}&timezone=auto`;
+
+            const weatherRes = await fetch(weatherUrl);
+            const weatherData = await weatherRes.json();
+            console.log(weatherData);
+
+            const rainfall = weatherData.daily.precipitation_sum;
+
+            if (!rainfall || rainfall.length === 0) {
+              console.log("No rainfall data available.");
+              return;
+            }
+
+            // 3. Calculate average rainfall
+            const totalRainfall = rainfall.reduce((acc, val) => acc + val, 0);
+            const avgRainfall = totalRainfall / rainfall.length;
+
+            console.log(`Average Rainfall in ${cityName} over last 120 days: ${avgRainfall.toFixed(2)} mm`);
+            document.getElementById("rainfall").value = avgRainfall.toFixed(5);
+
+          } catch (error) {
+            console.error("Error:", error.message);
+          }
+      }
+
+
+
+
+
+        window.onload = function () {
+        
+          let companyName = sessionStorage.getItem("companyName");
+          let email = sessionStorage.getItem("email");
+          let location = sessionStorage.getItem("location");
+          let sampleDate = sessionStorage.getItem("sampleDate");
+          let sampleNo = sessionStorage.getItem("sampleNo");
+
+          const n = sessionStorage.getItem("nitrate");
+          const p = sessionStorage.getItem("phosphorus");
+          const k = sessionStorage.getItem("potassium");
+          const pH = sessionStorage.getItem("pH");
+
+          if (companyName) {
+          document.getElementById("displayCompanyName").value = companyName;
+          }
+          if (email) {
+          document.getElementById("email").value = email;
+          }
+          if (location) {
+          document.getElementById("location").value = location;
+          }
+          if (sampleDate) {
+          document.getElementById("sampleDate").value = sampleDate;
+          }
+          if (sampleNo) {
+          document.getElementById("sampleNo").value = sampleNo;
+          }
+          if (k) {
+          document.getElementById("K").value = k;
+          }
+          if (n) {
+          document.getElementById("N").value = n;
+          }
+          if (p) {
+          document.getElementById("P").value = p;
+          }
+          if (pH) {
+          document.getElementById("pH").value = pH;
+          }
+          // If values are not present in session, user can manually enter them
+        };
+
+
+        const sub = document.querySelector("[abcd]");
+        sub.addEventListener("submit", (e) =>{
+
+            let temp = document.getElementById("temp").value;
+            let humidity = document.getElementById("humidity").value;
+            let rainfall = document.getElementById("rainfall").value;
+            console.log(temp);
+
+            sessionStorage.setItem("temp", temp);
+            sessionStorage.setItem("humidity", humidity);
+            sessionStorage.setItem("rainfall", rainfall);
+
+            let companyName = document.getElementById("displayCompanyName").value;
+            let email = document.getElementById("email").value;
+            let location = document.getElementById("location").value;
+            let sampleDate = document.getElementById("sampleDate").value;
+            let sampleNo = document.getElementById("sampleNo").value;
+
+            sessionStorage.setItem("companyName", companyName);
+            sessionStorage.setItem("email", email);
+            sessionStorage.setItem("location", location);
+            sessionStorage.setItem("sampleDate", sampleDate);
+            sessionStorage.setItem("sampleNo", sampleNo);
+
+            let nitrate = document.getElementById("N").value;
+            let phosphorus = document.getElementById("P").value;
+            let potassium = document.getElementById("K").value;
+            let pH = document.getElementById("pH").value;
+
+            sessionStorage.setItem("nitrate", nitrate);
+            sessionStorage.setItem("phosphorus", phosphorus);
+            sessionStorage.setItem("potassium", potassium);
+            sessionStorage.setItem("pH", pH);
+
+        })
+
+        // function saveData() {
+            
+        //     let companyName = document.getElementById("displayCompanyName").value;
+        //     let email = document.getElementById("email").value;
+        //     let location = document.getElementById("location").value;
+        //     let sampleDate = document.getElementById("sampleDate").value;
+        //     let sampleNo = document.getElementById("sampleNo").value;
+
+        //     let nitrate = document.getElementById("N").value;
+        //     let phosphorus = document.getElementById("P").value;
+        //     let potassium = document.getElementById("K").value;
+        //     let pH = document.getElementById("pH").value;
+
+        //     let temp = document.getElementById("temp").value;
+        //     let humidity = document.getElementById("humidity").value;
+        //     let rainfall = document.getElementById("rainfall").value;
+        //     console.log(temp);
+
+        //     sessionStorage.setItem("companyName", companyName);
+        //     sessionStorage.setItem("email", email);
+        //     sessionStorage.setItem("location", location);
+        //     sessionStorage.setItem("sampleDate", sampleDate);
+        //     sessionStorage.setItem("sampleNo", sampleNo);
+
+        //     sessionStorage.setItem("nitrate", nitrate);
+        //     sessionStorage.setItem("phosphorus", phosphorus);
+        //     sessionStorage.setItem("potassium", potassium);
+        //     sessionStorage.setItem("pH", pH);
+
+        //     sessionStorage.setItem("temp", temp);
+        //     sessionStorage.setItem("humidity", humidity);
+        //     sessionStorage.setItem("rainfall", rainfall);
+
+        // }
+
+    </script>
+</body>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>Soil Fertility Prediction</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.dob{
+  display:flex;
+  flex-direction: row;
+}
+.dob1{
+  font-size: 20px;
+  font-weight: 100;
+  font-family: monospace;
+  width: 230px;
+}
+.dob2{
+  font-size: 20px;
+  font-weight: 200;
+  font-family: monospace;
+  width: 200px;
+}
+.container1{
+  column-count: 2;
+  line-height: 0.5px;
+}
+
+.row {
+  display: flex;
+  margin-left:-5px;
+  margin-right:-5px;
+}
+
+.column {
+  flex: 50%;
+  padding: 5px;
+}
+table,th,td {
+  border: 1px solid #cccccc;
+  border-collapse: collapse;
+}
+
+th,td {
+  height: 80px;
+  width: 160px;
+  text-align: center;
+  vertical-align: middle;
+}
+body { 
+  background: #732025;
+  color: #fff;
+  font-size: 18px;
+  margin-left: 30px;
+}
+
+.print-btn {
+    display: block;
+    width: 250px;
+    margin: 30px auto; /* Adjusted spacing */
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #28a745, #218838);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    position: relative; /* No more fixed position */
+}
+
+.print-btn:hover {
+    background: linear-gradient(45deg, #218838, #1e7e34);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+          display :flex;
+          gap:30px;
+          text-align: center;
+          width: 100%;
+          height:120px;
+          /* justify-content: space-evenly; */
+        }
+
+.logo {
+  width: 320px;
+  height: 120px;
+  display: block;
+}
+.new{
+  display: flex ;
+  flex-direction: column;
+  gap:5px;
+}
+
+.company-name {
+            font-size: 44px;
+            font-weight: bold;
+            text-align: start;
+            word-spacing: 6px;
+        }
+
+#desc{
+  font-size: 16px;
+  font-weight:500;
+  text-align:start;
+
+}
+
+.signature-section, .print-date {
+    display: none;
+}
+
+.container{
+  column-count: 2;
+}
+
+@media print {
+    body {
+        color: black !important;
+        background: white !important;
+        margin: 0;
+        padding-top: 160px; /* Prevents overlap with fixed header */
+    }
+
+    .header {
+        position: fixed;
+        top: 0; 
+        left: 0;
+        width: 100%;
+        height: 150px; /* Ensures header height remains fixed */
+        background: white !important;
+        color: black !important;
+        padding: 10px 20px;
+        border-bottom: 2px solid #000;
+        display: flex;
+        align-items: center;
+        page-break-inside: avoid;
+    }
+
+    .logo {
+        width: 120px; /* Adjusted size for better fit */
+        height: auto;
+    }
+
+    .company-name {
+        font-size: 24px !important;
+        font-weight: bold;
+        color: black !important;
+        margin-left: 20px;
+        page-break-after: avoid;
+    }
+
+    #desc {
+        font-size: 14px !important;
+        color: black !important;
+        margin-top: 5px;
+        page-break-after: avoid;
+    }
+
+    .print-btn {
+        display: none; 
+    }
+
+    .content {
+        margin-top: 180px; 
+        page-break-before: always; 
+          }
+
+    table {
+        width: 100%;
+        page-break-before: auto;
+        border-collapse: avoid;
+        page-break-inside: avoid;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+        page-break-inside: avoid;
+    }
+    ol {
+        margin-top: 120px;
+        margin: 20px 0;
+        padding-left: 40px;
+        page-break-before: avoid;
+        page-break-after:avoid;
+        page-break-inside: avoid;
+    }
+
+    ol li {
+        font-size: 16px !important;
+        font-weight: 100;
+        margin-bottom: 5px;
+        line-height: 1.4;
+    }
+
+    .signature-section, .print-date {
+        display: flex!important;
+        gap: 50px;
+        text-align: left;
+        margin-top: 50px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .signature-line {
+        height: 50px;
+        border-bottom: 1px solid black;
+        width: 300px;
+        margin: 10px 0;
+    }
+
+    #printDate {
+        font-weight: bold;
+    }
+
+    .fle{
+      display: flex;
+      flex-direction: row;
+    }
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body onload="loadData()">
+  
+  <!-- Main Input For Receiving Query to our ML -->
+  <div id="reportContent">
+
+    <div class="header">
+      <img src="/static/logo.png" alt="Company Logo" class="logo">
+      <div class="new">
+        <div class="company-name">EHS MATRIX PRIVATE LTD. PUNE</div>
+        <div id="desc">Gmail - info@ehsmatrix.co.in&nbsp;&nbsp;&nbsp;&nbsp;Phone no. - +91 9850116976/9579684751&nbsp;&nbsp;&nbsp;&nbsp;LinkedIn- www.linkedin.com/company/ehs-matrixpvt-ltd/</div>
+        <div id="desc">Registered Address - C-7, Onkar Kudale Patil Estate, Manikbagh Sinhgad Road, Pune 411051</div>
+        <div id="desc">Laboratory Address - Sr. No 30/7, Office No. 202 & 203, Chintamani Industrial Estate, Near Dran Company, Dhayari Pune-411041</div>
+      </div>
+    </div>
+  
+    <hr>
+    <div class="container">
+      <p><strong style="font-size: 23px;">Company/Customer Name:&nbsp;&nbsp;</strong> <span id="displayCompanyName" style="font-size: 23px;" ></span></p>
+      <p><strong style="font-size: 23px;">Email Address:&nbsp;&nbsp;</strong> <span id="displayEmail" style="font-size: 23px;"></span></p>
+      <p><strong style="font-size: 23px;">Location:&nbsp;&nbsp;</strong> <span id="displayLocation" style="font-size: 23px;"></span></p>
+      <p><strong style="font-size: 23px;">Sample Collection Date:&nbsp;&nbsp;</strong> <span id="displaySampleDate" style="font-size: 23px;"></span></p>
+      <p><strong style="font-size: 23px;">Sample No:&nbsp;&nbsp;</strong> <span id="displaySampleNo" style="font-size: 23px;"></span></p>
+      <p><strong style="font-size: 23px;">Receipt No:&nbsp;&nbsp;</strong> <span id="receiptNo" style="font-size: 23px;"></span></p>
+    </div>
+    <hr>
+  
+    <div class="container1">
+      
+      <div class="dob">
+        <p class="dob1">1. Nitrate - </p>
+        <p id="displayNitrate" class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">2. Ammonium - </p>
+        <p id="displayAmmonium"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">3. Phosphorus - </p>
+        <p id="displayPhosphorus"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">4. Sulfate - </p>
+        <p id="displaySulfate"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">5. Potassium - </p>
+        <p id="displayPotassium"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">6. Boron - </p>
+        <p id="displayBoron"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">7. Organic Matter - </p>
+        <p id="displayOrganicMatter"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">8. pH Level - </p>
+        <p id="displaypH"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">9. Zinc - </p>
+        <p id="displayZinc"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">10. Copper - </p>
+        <p id="displayCopper"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">11. Iron - </p>
+        <p id="displayIron"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">12. Calcium - </p>
+        <p id="displayCalcium"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">13. Magnesium - </p>
+        <p id="displayMagnesium"  class="dob2"></p>
+    </div>
+    
+    <div class="dob">
+        <p class="dob1">14. Sodium - </p>
+        <p id="displaySodium"  class="dob2"></p>
+    </div>
+    
+       
+    </div>
+    <hr>
+    
+    <h1><center>Results</center></h1>
+  
+      <div>
+        <form action="{{ url_for('soilfertility')}}"method="post">
+        <h3>1. Soil Fertility is (In percentage): {{prediction_text[0]}}</h3>
+        <h3>2. Your soil fertility percentage is {{prediction_text[0]}}%. It indicates these values of nutrients are sufficient for growing {{prediction_text[0]}}% of plants in your soil.</h3>  
+        <h3>3. {{content}}</h3>
+        <h2> * Recommendations for natural increase in elements level </h2>
+        <h3>
+          <ol>
+            {% for r in c %}
+                <li>{{ r }}</li>
+            {% endfor %}
+        </ol>
+        </h3>
+        <h2>Recommendations for sythetic increase in elemnts level </h2>
+        <h3>
+          <ol>
+            {% for r in co %}
+                <li>{{ r }}</li>
+            {% endfor %}
+        </ol>
+        </h3>
+      </div>
+  
+  
+      <div>
+        <table style="margin-left: auto; margin-right: auto;">
+          <thead>
+                  <tr>
+                      <th style="height:30px;width:200px">Nutrient</th>
+                      <th style="height:30px;width:350px">Nutrient which will increase atomatically</th>
+                  </tr>
+          </thead>
+          <tbody>
+                    <tr>
+                      <td>NO3</td>
+                      <td>K, NH4, SO4, Organic Matter, Ca, Zn</td>
+                    </tr>
+                    <tr>
+                      <td>P</td>
+                      <td>Organic Matter, Fe, Ca, K, Cu, SO4</td>
+                    </tr>
+                    <tr>
+                      <td>K</td>
+                      <td>SO4, Mg, Na, Organic Matter, NO3, NH4</td>
+                    </tr>
+                    <tr>
+                      <td>Zn</td>
+                      <td>P, K, NH4, SO4, Organic Matter, NO3</td>
+                    </tr>
+                    <tr>
+                      <td>Fe</td>
+                      <td>Cu, B, Mg, Organic Matter,Na ,K</td>
+                    </tr>
+                    <tr>
+                      <td>Organic Matter</td>
+                      <td>Ma, Ca, B, K, P, NH4</td>
+                  </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+
+<div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
+  <div>
+    <button class="print-btn" onclick="printReport();">🖨 Print Report</button>
+  </div>
+  <div>
+    <button class="print-btn" onclick="downloadPDF()">⬇ Save Report as PDF</button>
+  </div>
+  <div>
+    <a  class="print-btn" style="text-decoration: none; text-align: center;" href="/crop" class="print-btn">🌾 Predict Crop</a>
+  </div>
+</div>
+
+<div class="signature-section">
+  <div>
+    <div class="signature-line"></div>
+    <h3>Signature of Lab Incharge:</h3>
+  </div>
+
+  <div>
+    <div class="signature-line"></div>
+    <h3>Signature of Lab Head:</h3>
+  </div>
+</div>
+
+<div class="print-date">
+  <h3>Date of Printing: <span id="printDate"></span></h3>
+</div>
+
+
+</body>
+
+<script>
+  
+  function downloadPDF() {
+    const element = document.getElementById("reportContent");
+    const opt = {
+        margin:       0.5,
+        filename:     'Soil_Fertility_Report_' + new Date().toISOString().slice(0,19).replace(/[:T]/g, '-') + '.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+}
+  function generateReceiptNumber() {
+          let now = new Date();
+          let timestamp = now.getFullYear().toString() +
+                          (now.getMonth() + 1).toString().padStart(2, '0') +
+                          now.getDate().toString().padStart(2, '0') +
+                          now.getHours().toString().padStart(2, '0') +
+                          now.getMinutes().toString().padStart(2, '0') +
+                          now.getSeconds().toString().padStart(2, '0');
+          return "REC-" + timestamp;
+      }
+
+  function printReport() {
+    let receiptNumber = generateReceiptNumber();
+      document.getElementById("receiptNo").innerText = receiptNumber;
+      document.getElementById("printDate").innerText = new Date().toLocaleDateString(); 
+      window.print();  
+      location.reload();  
+  }
+
+  function loadData() {
+            document.getElementById("displayCompanyName").textContent = sessionStorage.getItem("companyName") || "N/A";
+            document.getElementById("displayEmail").textContent = sessionStorage.getItem("email") || "N/A";
+            document.getElementById("displayLocation").textContent = sessionStorage.getItem("location") || "N/A";
+            document.getElementById("displaySampleDate").textContent = sessionStorage.getItem("sampleDate") || "N/A";
+            document.getElementById("displaySampleNo").textContent = sessionStorage.getItem("sampleNo") || "N/A";
+
+            
+            document.getElementById("displayNitrate").textContent = sessionStorage.getItem("nitrate") + "/ppm" || "N/A";
+            document.getElementById("displayAmmonium").textContent = sessionStorage.getItem("ammonium") + "/ppm" || "N/A";
+            document.getElementById("displayPhosphorus").textContent = sessionStorage.getItem("phosphorus") + "/ppm" || "N/A";
+            document.getElementById("displaySulfate").textContent = sessionStorage.getItem("sulfate") + "/ppm" || "N/A";
+            document.getElementById("displayPotassium").textContent = sessionStorage.getItem("potassium") + "/ppm" || "N/A";
+            document.getElementById("displayBoron").textContent = sessionStorage.getItem("boron") + "/ppm" || "N/A";
+            document.getElementById("displayOrganicMatter").textContent = sessionStorage.getItem("organicMatter") + "%" || "N/A";
+            document.getElementById("displaypH").textContent = sessionStorage.getItem("pH") + "ph" || "N/A";
+            document.getElementById("displayZinc").textContent = sessionStorage.getItem("zinc") + "/ppm" || "N/A";
+            document.getElementById("displayCopper").textContent = sessionStorage.getItem("copper") + "/ppm" || "N/A";
+            document.getElementById("displayIron").textContent = sessionStorage.getItem("iron") + "/ppm" || "N/A";
+            document.getElementById("displayCalcium").textContent = sessionStorage.getItem("calcium") + "/meq/100g" || "N/A";
+            document.getElementById("displayMagnesium").textContent = sessionStorage.getItem("magnesium") + "/meq/100g" || "N/A";
+            document.getElementById("displaySodium").textContent = sessionStorage.getItem("sodium") + "/meq/100g" || "N/A";
+
+        }
+
+
+</script>
+
+</html>
