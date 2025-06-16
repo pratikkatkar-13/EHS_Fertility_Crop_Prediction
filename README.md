@@ -11,3 +11,6 @@ How to run :
  6. On clicking the predict crop button it redirects to next webpage where session storage will take the values of certain fileds.
  7. Only enter the place name where the crop predication has to be done whcih can take call API for fetching climatic parameters values and click on predict button
  8. The result will be displayed in the webpage along with that entry will be made in DB you can view it through SQLite browser, you can print and download the reports too.
+
+Detailed report and Screenshots are being attached in below give PDF.
+[📄 View Report](static/EHS_Fertility_Crop_Prediction.pdf)
